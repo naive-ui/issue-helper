@@ -1,0 +1,25 @@
+{
+  "name": "issue-helper",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@vicons/fluent": "^0.8.0",
+    "axios": "^0.21.1",
+    "hanabi": "^0.4.0",
+    "marked": "^2.0.1",
+    "naive-ui": "^2.11.7",
+    "qs": "^6.10.1",
+    "vue": "^3.0.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vue/compiler-sfc": "^3.0.5",
+    "typescript": "^4.1.3",
+    "vite": "^2.2.4",
+    "vue-tsc": "^0.0.24"
+  }
+}
