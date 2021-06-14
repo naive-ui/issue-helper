@@ -548,12 +548,8 @@ ${comment}
 </script>
 
 <style scoped>
-:deep(.n-form-item-label) {
-  font-size: 18px;
-}
-
 .card {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 .form {
