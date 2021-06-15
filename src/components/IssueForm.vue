@@ -34,7 +34,7 @@
 
       <!-- Issue 标题 -->
       <n-form-item :label="contentText.issueTitleHint" path="title">
-        <n-input v-model:value="form.title" placeholder="请输入" />
+        <n-input v-model:value="form.title" />
       </n-form-item>
 
       <!-- 项目版本 -->
@@ -49,9 +49,14 @@
           class="form-select"
         />
       </n-form-item>
-      <n-alert type="default" class="m-b-24" show-icon>
+      <n-alert
+        type="default"
+        class="m-b-24"
+        show-icon
+        :title="contentText.firstTipTitle"
+      >
         <template #icon>
-          <n-icon :depth="3">
+          <n-icon>
             <info-24-regular />
           </n-icon>
         </template>
@@ -99,17 +104,22 @@
             :label="contentText.versionNodeHint"
             path="versionNode"
           >
-            <n-input v-model:value="form.versionNode" placeholder="请输入" />
+            <n-input v-model:value="form.versionNode" />
           </n-form-item-gi>
         </n-grid>
 
         <!-- 重现链接 -->
         <n-form-item :label="contentText.reproduceHint" path="reproduce">
-          <n-input v-model:value="form.reproduce" placeholder="请输入" />
+          <n-input v-model:value="form.reproduce" />
         </n-form-item>
-        <n-alert type="default" class="m-b-24" show-icon>
+        <n-alert
+          type="default"
+          class="m-b-24"
+          show-icon
+          :title="contentText.secondTipTitle"
+        >
           <template #icon>
-            <n-icon :depth="3">
+            <n-icon>
               <info-24-regular />
             </n-icon>
           </template>
@@ -149,15 +159,16 @@
           path="steps"
           ingore-path-change
         >
-          <n-input
-            v-model:value="form.steps"
-            type="textarea"
-            placeholder="请输入"
-          />
+          <n-input v-model:value="form.steps" type="textarea" />
         </n-form-item>
-        <n-alert type="default" class="m-b-24" show-icon>
+        <n-alert
+          type="default"
+          class="m-b-24"
+          show-icon
+          :title="contentText.thirdTipTitle"
+        >
           <template #icon>
-            <n-icon :depth="3">
+            <n-icon>
               <info-24-regular />
             </n-icon>
           </template>
@@ -166,33 +177,26 @@
 
         <!-- 期望的结果是什么 -->
         <n-form-item :label="contentText.expectHint" path="expected">
-          <n-input
-            v-model:value="form.expected"
-            type="textarea"
-            placeholder="请输入"
-          ></n-input>
+          <n-input v-model:value="form.expected" type="textarea"></n-input>
         </n-form-item>
 
         <!-- 实际的结果是什么 -->
         <n-form-item :label="contentText.actualHint" path="actual">
-          <n-input
-            v-model:value="form.actual"
-            type="textarea"
-            placeholder="请输入"
-          ></n-input>
+          <n-input v-model:value="form.actual" type="textarea"></n-input>
         </n-form-item>
 
         <!-- 补充说明（可选） -->
         <n-form-item :label="contentText.remarks">
-          <n-input
-            v-model:value="form.remarks"
-            type="textarea"
-            placeholder="请输入"
-          ></n-input>
+          <n-input v-model:value="form.remarks" type="textarea"></n-input>
         </n-form-item>
-        <n-alert type="default" class="m-b-24" show-icon>
+        <n-alert
+          type="default"
+          class="m-b-24"
+          show-icon
+          :title="contentText.fourthTipTitle"
+        >
           <template #icon>
-            <n-icon :depth="3">
+            <n-icon>
               <info-24-regular />
             </n-icon>
           </template>
@@ -206,11 +210,11 @@
           :label="contentText.functionContent"
           path="functionContent"
         >
-          <n-input v-model:value="form.functionContent" placeholder="请输入" />
+          <n-input v-model:value="form.functionContent" />
         </n-form-item>
         <n-alert type="default" class="m-b-24" show-icon>
           <template #icon>
-            <n-icon :depth="3">
+            <n-icon>
               <info-24-regular />
             </n-icon>
           </template>
@@ -227,12 +231,11 @@
           <n-input
             v-model:value="form.functionalExpectations"
             type="textarea"
-            placeholder="请输入"
           ></n-input>
         </n-form-item>
         <n-alert type="default" class="m-b-24" show-icon>
           <template #icon>
-            <n-icon :depth="3">
+            <n-icon>
               <info-24-regular />
             </n-icon>
           </template>
@@ -255,15 +258,14 @@
       :title="contentText.dialog.title"
       closable
       @close="previewVisible = false"
+      class="modal-card"
     >
       <div v-html="issueHTML" class="preview-content"></div>
-      <template #action>
-        <div class="preview-footer">
-          <n-button type="primary" @click="create()">{{
-            contentText.dialog.button
-          }}</n-button>
-        </div>
-      </template>
+      <div class="preview-footer">
+        <n-button type="primary" size="large" @click="create()">{{
+          contentText.dialog.button
+        }}</n-button>
+      </div>
     </n-card>
   </n-modal>
 </template>
@@ -393,7 +395,7 @@ export default defineComponent({
           {
             required: true,
             message: valid[prop],
-            trigger: ['blur', 'change'],
+            trigger: ['blur', 'change', 'input'],
           },
         ];
       }
@@ -547,16 +549,18 @@ ${comment}
 
 <style scoped>
 .card {
-  margin-bottom: 36px;
+  margin-bottom: 24px;
+}
+
+.modal-card {
+  width: calc(var(--content-width) + 32px);
+  max-width: var(--content-max-width);
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 .form {
   margin-top: 10px;
-}
-
-.alert-font {
-  font-size: 13px;
-  color: #909399;
 }
 
 .form-select {

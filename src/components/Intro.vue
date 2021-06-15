@@ -1,12 +1,12 @@
 <template>
   <n-card :title="contentText.introTitle">
-    <p v-html="contentText.introOne" />
+    <v-node :render="contentText.introOne" />
 
     <n-button text type="primary" @click="introVisible = true">{{
       contentText.explainTitle
     }}</n-button>
 
-    <p v-html="contentText.introTwo" />
+    <v-node :render="contentText.introTwo" />
 
     <n-modal v-model:show="introVisible">
       <n-card
@@ -31,6 +31,12 @@ export default defineComponent({
     NCard,
     NButton,
     NModal,
+    VNode: defineComponent({
+      props: ['render'],
+      render() {
+        return this.render();
+      },
+    }),
   },
   props: {
     lang: {

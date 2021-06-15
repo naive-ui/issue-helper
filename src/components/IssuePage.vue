@@ -1,13 +1,18 @@
 <template>
-  <PageHead :lang="lang" @langChange="setLang"/>
-  <div class="content-box">
-    <div class="content"><Intro :lang="lang" /></div>
-    <div class="content"><IssueForm :lang="lang" /></div>
-  </div>
+  <n-config-provider :theme-overrides="themeOverrides" :locale="locale">
+    <n-layout embedded>
+      <PageHead :lang="lang" @langChange="setLang" />
+      <div class="content-box">
+        <div class="content"><Intro :lang="lang" /></div>
+        <div class="content"><IssueForm :lang="lang" /></div>
+      </div>
+    </n-layout>
+  </n-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { NLayout, NConfigProvider, GlobalThemeOverrides, zhCN } from 'naive-ui';
 import PageHead from './PageHead.vue';
 import Intro from './Intro.vue';
 import IssueForm from './IssueForm.vue';
@@ -19,27 +24,46 @@ export default defineComponent({
     PageHead,
     Intro,
     IssueForm,
+    NLayout,
+    NConfigProvider,
   },
   setup: () => {
     const lang = ref<'en-US' | 'zh-CN'>('en-US');
+    const locale = ref<undefined | typeof zhCN>();
 
     const setLang = (value: 'en-US' | 'zh-CN') => {
       lang.value = value;
+      locale.value = value === 'en-US' ? undefined : zhCN;
       updateQuery({ lang: value });
     };
 
-    onMounted(() => {
-      const param = getQuery();
-      if (!param?.lang) {
-        updateQuery({ lang: lang.value });
-      } else {
-        setLang(param.lang);
-      }
-    });
+    // init
+    const param = getQuery();
+    if (!param?.lang) {
+      updateQuery({ lang: lang.value });
+    } else {
+      setLang(param.lang);
+    }
+
+    const themeOverrides: GlobalThemeOverrides = {
+      common: {
+        fontSize: '15px',
+        fontSizeMedium: '15px',
+        fontSizeLarge: '16px',
+      },
+      Card: {
+        titleFontSizeMedium: '20px',
+      },
+      Form: {
+        labelFontSizeTopLarge: '15px',
+      },
+    };
 
     return {
       lang,
-      setLang
+      locale,
+      themeOverrides,
+      setLang,
     };
   },
 });
@@ -53,6 +77,6 @@ export default defineComponent({
 }
 
 .content {
-  margin-top: 40px;
+  margin-top: 24px;
 }
 </style>

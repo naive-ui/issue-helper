@@ -3,7 +3,7 @@
     <div class="nav-box">
       <n-text tag="div" class="ui-logo" :depth="1">
         <img src="../assets/logo.svg" />
-        <span>Naive UI Issue-helper</span>
+        <span>Issue Helper</span>
       </n-text>
       <n-button
         text

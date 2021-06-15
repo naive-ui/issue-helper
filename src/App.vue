@@ -18,40 +18,21 @@ export default defineComponent({
 html,
 body,
 #app {
-  background-color: #f0f2f5;
   margin: 0;
   padding: 0;
   height: 100%;
   min-width: 320px;
   --header-height: 64px;
-  --content-width: 960px;
+  --content-width: 900px;
   --content-max-width: calc(100vw - 32px);
 }
 
-#app {
-  height: 100%;
-}
-
 body {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', SimSun, sans-serif;
   overflow: auto;
-  font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
 
 a {
-  color: #18a058;
   text-decoration: none;
-}
-
-button,
-input,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
 }
 </style>
