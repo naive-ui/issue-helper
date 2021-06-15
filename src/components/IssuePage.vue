@@ -47,14 +47,12 @@ export default defineComponent({
 
 <style scoped>
 .content-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f0f2f5;
+  margin: auto;
+  width: var(--content-width);
+  max-width: var(--content-max-width);
 }
 
 .content {
-  width: 50%;
   margin-top: 40px;
 }
 </style>

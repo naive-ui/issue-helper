@@ -18,11 +18,14 @@ export default defineComponent({
 html,
 body,
 #app {
+  background-color: #f0f2f5;
   margin: 0;
   padding: 0;
   height: 100%;
   min-width: 320px;
   --header-height: 64px;
+  --content-width: 960px;
+  --content-max-width: calc(100vw - 32px);
 }
 
 #app {

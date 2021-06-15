@@ -13,7 +13,6 @@
         :title="contentText.explainTitle"
         closable
         @close="introVisible = false"
-        style="width: 50%"
       >
         <p v-html="contentText.explain"></p>
       </n-card>

@@ -127,7 +127,6 @@
             :title="contentText.reproduceTitle"
             closable
             @close="tipVisible = false"
-            style="width: 50%"
           >
             <n-p v-html="contentText.reproduceExplain" />
             <n-h3>{{ contentText.reproduceExplainTitleOne }}</n-h3>
@@ -256,7 +255,6 @@
       :title="contentText.dialog.title"
       closable
       @close="previewVisible = false"
-      style="width: 50%"
     >
       <div v-html="issueHTML" class="preview-content"></div>
       <template #action>

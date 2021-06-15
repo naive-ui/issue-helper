@@ -58,9 +58,11 @@ export default defineComponent({
 }
 
 .nav-box {
-  width: 50%;
   display: flex;
   justify-content: space-between;
+  margin: auto;
+  width: var(--content-width);
+  max-width: var(--content-max-width);
 }
 
 .ui-logo {
