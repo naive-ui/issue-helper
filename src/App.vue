@@ -1,15 +1,19 @@
 <template>
-  <IssuePage />
+  <n-message-provider>
+    <IssuePage />
+  </n-message-provider>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { NMessageProvider } from 'naive-ui';
 import IssuePage from './components/IssuePage.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     IssuePage,
+    NMessageProvider,
   },
 });
 </script>

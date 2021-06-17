@@ -37,33 +37,33 @@
         <n-input v-model:value="form.title" />
       </n-form-item>
 
-      <!-- 项目版本 -->
-      <n-form-item
-        :label="contentText.versionRepositoryHint"
-        path="versionRepository"
-      >
-        <n-select
-          placeholder="请选择"
-          v-model:value="form.versionRepository"
-          :options="version.repo"
-          class="form-select"
-        />
-      </n-form-item>
-      <n-alert
-        type="default"
-        class="m-b-24"
-        show-icon
-        :title="contentText.firstTipTitle"
-      >
-        <template #icon>
-          <n-icon>
-            <info-24-regular />
-          </n-icon>
-        </template>
-        <span class="alert-font">{{ contentText.firstTip }}</span>
-      </n-alert>
-
       <template v-if="isBug">
+        <!-- 项目版本 -->
+        <n-form-item
+          :label="contentText.versionRepositoryHint"
+          path="versionRepository"
+        >
+          <n-select
+            placeholder="请选择"
+            v-model:value="form.versionRepository"
+            :options="version.repo"
+            class="form-select"
+          />
+        </n-form-item>
+        <n-alert
+          type="default"
+          class="m-b-24"
+          show-icon
+          :title="contentText.firstTipTitle"
+        >
+          <template #icon>
+            <n-icon>
+              <info-24-regular />
+            </n-icon>
+          </template>
+          <span class="alert-font">{{ contentText.firstTip }}</span>
+        </n-alert>
+
         <n-grid cols="2" :x-gap="16">
           <!-- Vue版本 -->
           <n-form-item-gi :label="contentText.versionVueHint" path="versionVue">
@@ -212,7 +212,12 @@
         >
           <n-input v-model:value="form.functionContent" />
         </n-form-item>
-        <n-alert type="default" class="m-b-24" show-icon>
+        <n-alert
+          type="default"
+          class="m-b-24"
+          :title="contentText.functionContentTipTitle"
+          show-icon
+        >
           <template #icon>
             <n-icon>
               <info-24-regular />
@@ -233,7 +238,12 @@
             type="textarea"
           ></n-input>
         </n-form-item>
-        <n-alert type="default" class="m-b-24" show-icon>
+        <n-alert
+          type="default"
+          class="m-b-24"
+          :title="contentText.functionalExpectationsTipTitle"
+          show-icon
+        >
           <template #icon>
             <n-icon>
               <info-24-regular />
@@ -282,6 +292,7 @@ import {
   onMounted,
   PropType,
   toRef,
+  h,
 } from 'vue';
 import {
   NForm,
@@ -298,6 +309,7 @@ import {
   NH3,
   NText,
   NP,
+  useMessage,
 } from 'naive-ui';
 import { Info24Regular } from '@vicons/fluent';
 import axios from 'axios';
@@ -346,6 +358,7 @@ export default defineComponent({
   },
   setup: (props) => {
     const lang = toRef(props, 'lang');
+    const message = useMessage();
     const contentText = computed(() => content[lang.value]);
     const repoOptions = computed(() =>
       contentText.value.repos.map((i) => {
@@ -502,11 +515,13 @@ ${formData.form.functionalExpectations}
     }
 
     function handlePreview() {
-      formRef.value.validate((errors: boolean) => {
+      formRef.value.validate((errors: Array<{ message: string }[]>) => {
         if (!errors) {
           createIssue();
         } else {
-          console.error('error submit!!');
+          errors.forEach((item) => {
+            message.error(item[0].message);
+          });
           return false;
         }
       });

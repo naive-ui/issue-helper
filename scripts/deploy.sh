@@ -6,7 +6,6 @@ npm run build
 
 cd dist
 
-git remote add upstream https://github.com/naive-ui/issue-helper.git
 git add -A
 git commit -m 'feat: deploy'
 
