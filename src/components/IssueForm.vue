@@ -292,6 +292,7 @@ import {
   onMounted,
   PropType,
   toRef,
+  h,
 } from 'vue';
 import {
   NForm,
@@ -518,7 +519,9 @@ ${formData.form.functionalExpectations}
         if (!errors) {
           createIssue();
         } else {
-          message.error(errors[0][0].message);
+          errors.forEach((item) => {
+            message.error(item[0].message);
+          });
           return false;
         }
       });
