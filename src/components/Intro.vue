@@ -2,6 +2,14 @@
   <n-card :title="contentText.introTitle">
     <v-node :render="contentText.introOne" />
 
+    <n-alert
+      :title="contentText.introWarningTitle"
+      type="warning"
+      style="margin-bottom: 16px"
+    >
+      <v-node :render="contentText.introWarningContent" />
+    </n-alert>
+
     <n-button text type="primary" @click="introVisible = true">{{
       contentText.explainTitle
     }}</n-button>
@@ -22,7 +30,7 @@
 
 <script lang="ts">
 import { ref, defineComponent, Ref, PropType, toRef, computed } from 'vue';
-import { NCard, NButton, NModal } from 'naive-ui';
+import { NCard, NButton, NModal, NAlert } from 'naive-ui';
 import content from '../content.js';
 
 export default defineComponent({
@@ -31,6 +39,7 @@ export default defineComponent({
     NCard,
     NButton,
     NModal,
+    NAlert,
     VNode: defineComponent({
       props: ['render'],
       render() {

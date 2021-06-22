@@ -1,5 +1,5 @@
 import { h } from 'vue';
-import { NP, NText, NUl, NA } from 'naive-ui';
+import { NP, NText, NUl, NA, NPopover } from 'naive-ui';
 
 export default {
   'zh-CN': {
@@ -21,6 +21,48 @@ export default {
             '。',
           ],
         }),
+      ];
+    },
+    introWarningTitle: '不要用 Issue Helper 提使用问题！',
+    introWarningContent: () => {
+      return [
+        '这只会让 Issue 被立即关闭。如果有使用问题，可以加入官方社区求助：',
+        h(
+          NPopover,
+          {
+            trigger: 'hover',
+            placement: 'bottom',
+            style:'padding: 0;'
+          },
+          {
+            default:()=> h(
+              'img',
+              {
+                width: '150',
+                src: './src/assets/dingding.jpg',
+                style: 'display: block;'
+              },
+            ),
+            trigger: ()=> h(
+              NA,
+              null,
+              {
+                default: () => '钉钉群',
+              }
+            ),
+          }
+        ),
+        ' 或者 ',
+        h(
+          NA,
+          {
+            href: 'https://discord.com/invite/Pqv7Mev5Dd',
+            target: '_blank',
+          },
+          {
+            default: () => 'Discord',
+          }
+        ),
       ];
     },
     introTwo: () => {
@@ -189,6 +231,23 @@ export default {
         ],
       });
     },
+    introWarningTitle: 'Don\'t use Issue Helper to ask usage questions!',
+    introWarningContent: () => {
+      return [
+        "This will only cause issue to be shut down immediately. If you have any problems, you can join the official community for help: ",
+        h(
+          NA,
+          {
+            href: 'https://discord.com/invite/Pqv7Mev5Dd',
+            target: '_blank',
+          },
+          {
+            default: () => 'Discord',
+          }
+        ),
+        '.'
+      ];
+    },
     introTwo: () => {
       return [
         h(NP, null, {
@@ -322,7 +381,8 @@ export default {
       expected: '<What is expected> is required!',
       actual: '<What is actually happening> is required!',
       functionContent: '<What problem does this feature solve> is required!',
-      functionalExpectations: '<What does the proposed API look like> is required!',
+      functionalExpectations:
+        '<What does the proposed API look like> is required!',
     },
     loadingText: 'loading',
     noMatchText: 'No matching data',
