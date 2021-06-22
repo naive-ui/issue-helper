@@ -12,23 +12,27 @@
       <n-grid cols="2" :x-gap="16">
         <!-- 选择要提交的库 -->
         <n-form-item-gi :label="contentText.repoSelectHint" path="repo">
-          <n-select
-            placeholder="请选择"
-            v-model:value="form.repo"
-            :options="repoOptions"
-            class="form-select"
-          />
+          <n-select v-model:value="form.repo" :options="repoOptions" />
         </n-form-item-gi>
 
         <!-- Issue 类别 -->
 
         <n-form-item-gi :label="contentText.issueTypesHint" path="type">
-          <n-select
-            placeholder="请选择"
+          <n-radio-group
             v-model:value="form.type"
-            :options="issueTypeOptions"
-            class="form-select"
-          />
+            style="width: 100%; text-align: center"
+          >
+            <n-radio-button
+              style="width: calc(50% - 1px)"
+              :value="issueTypeOptions[0].value"
+              >{{ issueTypeOptions[0].label }}</n-radio-button
+            >
+            <n-radio-button
+              style="width: 50%"
+              :value="issueTypeOptions[1].value"
+              >{{ issueTypeOptions[1].label }}</n-radio-button
+            >
+          </n-radio-group>
         </n-form-item-gi>
       </n-grid>
 
@@ -44,10 +48,8 @@
           path="versionRepository"
         >
           <n-select
-            placeholder="请选择"
             v-model:value="form.versionRepository"
             :options="version.repo"
-            class="form-select"
           />
         </n-form-item>
         <n-alert
@@ -67,12 +69,7 @@
         <n-grid cols="2" :x-gap="16">
           <!-- Vue版本 -->
           <n-form-item-gi :label="contentText.versionVueHint" path="versionVue">
-            <n-select
-              placeholder="请选择"
-              v-model:value="form.versionVue"
-              :options="version.vue"
-              class="form-select"
-            />
+            <n-select v-model:value="form.versionVue" :options="version.vue" />
           </n-form-item-gi>
 
           <!-- 浏览器及其版本 -->
@@ -134,22 +131,30 @@
         >
         <n-modal v-model:show="tipVisible">
           <n-card
+            class="modal-card"
             :title="contentText.reproduceTitle"
             closable
             @close="tipVisible = false"
           >
-            <n-p v-html="contentText.reproduceExplain" />
+            <n-p>{{ contentText.reproduceExplain }}</n-p>
             <n-h3>{{ contentText.reproduceExplainTitleOne }}</n-h3>
-            <n-p v-html="contentText.reproduceExplainParagraphOne" />
+            <n-p>{{ contentText.reproduceExplainParagraphOne }}</n-p>
             <n-h3>{{ contentText.reproduceExplainTitleTwo }}</n-h3>
             <n-p>
               <n-text strong>{{ contentText.keyWords }}</n-text
-              ><n-text v-html="contentText.reproduceExplainParagraphTwo" />
+              ><n-text>{{ contentText.reproduceExplainParagraphTwo }}</n-text>
             </n-p>
             <n-h3>{{ contentText.reproduceExplainTitleThree }}</n-h3>
-            <n-p v-html="contentText.reproduceExplainParagraphThree" />
+            <n-p>
+              {{ contentText.reproduceExplainParagraphThree1 }}
+            </n-p>
+            <n-ol>
+              <li>{{ contentText.reproduceExplainParagraphThree2 }}</li>
+              <li>{{ contentText.reproduceExplainParagraphThree3 }}</li>
+            </n-ol>
+            <n-p>{{ contentText.reproduceExplainParagraphThree4 }}</n-p>
             <n-h3>{{ contentText.reproduceExplainTitleFour }}</n-h3>
-            <n-p v-html="contentText.reproduceExplainParagraphFour" />
+            <n-p>{{ contentText.reproduceExplainParagraphFour }}</n-p>
           </n-card>
         </n-modal>
 
@@ -159,7 +164,11 @@
           path="steps"
           ingore-path-change
         >
-          <n-input v-model:value="form.steps" type="textarea" />
+          <n-input
+            v-model:value="form.steps"
+            type="textarea"
+            :autosize="autosizeConfig"
+          />
         </n-form-item>
         <n-alert
           type="default"
@@ -177,17 +186,29 @@
 
         <!-- 期望的结果是什么 -->
         <n-form-item :label="contentText.expectHint" path="expected">
-          <n-input v-model:value="form.expected" type="textarea"></n-input>
+          <n-input
+            v-model:value="form.expected"
+            type="textarea"
+            :autosize="autosizeConfig"
+          ></n-input>
         </n-form-item>
 
         <!-- 实际的结果是什么 -->
         <n-form-item :label="contentText.actualHint" path="actual">
-          <n-input v-model:value="form.actual" type="textarea"></n-input>
+          <n-input
+            v-model:value="form.actual"
+            type="textarea"
+            :autosize="autosizeConfig"
+          ></n-input>
         </n-form-item>
 
         <!-- 补充说明（可选） -->
         <n-form-item :label="contentText.remarks">
-          <n-input v-model:value="form.remarks" type="textarea"></n-input>
+          <n-input
+            v-model:value="form.remarks"
+            type="textarea"
+            :autosize="autosizeConfig"
+          ></n-input>
         </n-form-item>
         <n-alert
           type="default"
@@ -236,7 +257,8 @@
           <n-input
             v-model:value="form.functionalExpectations"
             type="textarea"
-          ></n-input>
+            :autosize="autosizeConfig"
+          />
         </n-form-item>
         <n-alert
           type="default"
@@ -270,7 +292,9 @@
       @close="previewVisible = false"
       class="modal-card"
     >
-      <div v-html="issueHTML" class="preview-content"></div>
+      <div class="preview-content">
+        <v-node :render="issueVNode" />
+      </div>
       <div class="preview-footer">
         <n-button type="primary" size="large" @click="create()">{{
           contentText.dialog.button
@@ -293,6 +317,7 @@ import {
   PropType,
   toRef,
   h,
+  VNodeChild,
 } from 'vue';
 import {
   NForm,
@@ -309,26 +334,15 @@ import {
   NH3,
   NText,
   NP,
+  NOl,
+  NRadioGroup,
+  NRadioButton,
   useMessage,
 } from 'naive-ui';
 import { Info24Regular } from '@vicons/fluent';
 import axios from 'axios';
-import marked from 'marked';
-import hanabi from 'hanabi';
 import content from '../content.js';
-import { FormData, RepoItem } from '../data';
-
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  highlight: (code: any) => hanabi(code),
-  pedantic: false,
-  gfm: true,
-  breaks: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
-  xhtml: false,
-});
+import { FormData } from '../data';
 
 const comment = '<!-- generated by issue-helper DO NOT REMOVE -->';
 
@@ -349,6 +363,9 @@ export default defineComponent({
     NH3,
     NText,
     NP,
+    NOl,
+    NRadioGroup,
+    NRadioButton,
     Info24Regular,
   },
   props: {
@@ -390,8 +407,8 @@ export default defineComponent({
         vue: [],
       },
     });
-    const issue: Ref<string> = ref('');
-    const issueHTML = computed(() => marked(issue.value));
+    const issue = ref('');
+    const issueRenderRef: Ref<() => VNodeChild | null> = ref(null);
     const tipVisible: Ref<boolean> = ref(false);
     const previewVisible: Ref<boolean> = ref(false);
 
@@ -413,9 +430,14 @@ export default defineComponent({
         ];
       }
 
+      const reprodErrorMessage =
+        lang.value === 'zh-CN'
+          ? '请填写正确的重现链接'
+          : 'Please input a valid reproduction link';
+
       rules['reproduce'].push({
         trigger: ['blur', 'change'],
-        message: '请填写正确的重现链接',
+        message: reprodErrorMessage,
         validator: (rule: any, val: string) => {
           return new Promise((resolve, reject) => {
             if (
@@ -424,7 +446,7 @@ export default defineComponent({
                 val
               )
             ) {
-              reject(Error('请填写正确的重现链接'));
+              reject(Error(reprodErrorMessage));
             } else {
               resolve('');
             }
@@ -469,9 +491,9 @@ export default defineComponent({
     );
 
     function createIssue() {
+      // Setting issue string value
       issue.value = isBug.value
-        ? `
-### ${formData.form.repo} version (版本)
+        ? `### ${formData.form.repo} version (版本)
 ${formData.form.versionRepository}
 
 ### Vue version (Vue 版本)
@@ -500,17 +522,53 @@ ${formData.form.actual}
 
 ### Remarks (补充说明)
 ${formData.form.remarks}
-
 `.trim()
-        : `
-
-### This function solves the problem (这个功能解决的问题)
+        : `### This function solves the problem (这个功能解决的问题)
 ${formData.form.functionContent}
-
 ### Expected API (期望的 API)
-${formData.form.functionalExpectations}
+${formData.form.functionalExpectations}`.trim();
+      // Setting issue render function value
+      issueRenderRef.value = isBug.value
+        ? () => [
+            h(NH3, null, {
+              default: () => `${formData.form.repo} version (版本)`,
+            }),
+            h(NP, null, { default: () => formData.form.versionRepository }),
+            h(NH3, null, { default: () => `Vue version (Vue 版本)` }),
+            h(NP, null, { default: () => formData.form.versionVue }),
+            h(NH3, null, {
+              default: () => `Browser and its version (浏览器及其版本)`,
+            }),
+            h(NP, null, { default: () => formData.form.versionBrowser }),
+            h(NH3, null, {
+              default: () => `System and its version (系统及其版本)`,
+            }),
+            h(NP, null, { default: () => formData.form.versionSystem }),
+            h(NH3, null, { default: () => `Reproduction link (重现链接)` }),
+            h(NP, null, { default: () => formData.form.reproduce }),
+            h(NH3, null, { default: () => `Reproduction steps (重现步骤)` }),
+            h(NP, null, { default: () => formData.form.steps }),
+            h(NH3, null, { default: () => `Vue version (Vue 版本)` }),
+            h(NP, null, { default: () => formData.form.versionVue }),
+            h(NH3, null, { default: () => `Expected results (期望的结果)` }),
+            h(NP, null, { default: () => formData.form.expected }),
+            h(NH3, null, { default: () => `Actual results (实际的结果)` }),
+            h(NP, null, { default: () => formData.form.actual }),
+            h(NH3, null, { default: () => `Remarks (补充说明)` }),
+            h(NP, null, { default: () => formData.form.remarks }),
+          ]
+        : () => [
+            h(NH3, null, {
+              default: () =>
+                `This function solves the problem (这个功能解决的问题)`,
+            }),
+            h(NP, null, { default: () => formData.form.functionContent }),
+            h(NH3, null, { default: () => `Expected API (期望的 API)` }),
+            h(NP, null, {
+              default: () => formData.form.functionalExpectations,
+            }),
+          ];
 
-`.trim();
       previewVisible.value = true;
     }
 
@@ -527,20 +585,14 @@ ${formData.form.functionalExpectations}
       });
     }
 
-    const body = computed(() => {
-      const issueString = `
-${comment}
-
-${issue.value}
-
-${comment}
-`;
-      return encodeURIComponent(issueString).replace(/%2B/gi, '+');
-    });
-
     function create() {
+      const issueString = `${comment}\n\n${issue.value}\n\n${comment}`;
+      const issueUriComponent = encodeURIComponent(issueString).replace(
+        /%2B/gi,
+        '+'
+      );
       window.open(
-        `https://github.com/${formData.form.repo}/issues/new?title=${formData.form.title}&body=${body.value}`
+        `https://github.com/${formData.form.repo}/issues/new?title=${formData.form.title}&body=${issueUriComponent}`
       );
     }
     return {
@@ -554,8 +606,11 @@ ${comment}
       tipVisible,
       isBug,
       previewVisible,
+      issueVNode: issueRenderRef,
+      autosizeConfig: {
+        minRows: 3,
+      },
       handlePreview,
-      issueHTML,
       create,
     };
   },
@@ -567,19 +622,8 @@ ${comment}
   margin-bottom: 24px;
 }
 
-.modal-card {
-  width: calc(var(--content-width) + 32px);
-  max-width: var(--content-max-width);
-  margin-top: 32px;
-  margin-bottom: 32px;
-}
-
 .form {
   margin-top: 10px;
-}
-
-.form-select {
-  width: 100%;
 }
 
 .m-b-24 {

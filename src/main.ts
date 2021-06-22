@@ -1,6 +1,13 @@
-import { createApp } from 'vue';
+import { createApp, defineComponent } from 'vue';
 import App from './App.vue';
 
 import 'vfonts/Inter.css';
 
-createApp(App).mount('#app');
+const app = createApp(App)
+app.component('VNode', defineComponent({
+  props: ['render'],
+  render() {
+    return this.render();
+  },
+}),)
+app.mount('#app');

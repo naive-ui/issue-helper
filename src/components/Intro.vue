@@ -18,11 +18,12 @@
 
     <n-modal v-model:show="introVisible">
       <n-card
+        class="modal-card"
         :title="contentText.explainTitle"
         closable
         @close="introVisible = false"
       >
-        <p v-html="contentText.explain"></p>
+        <v-node :render="contentText.explain" />
       </n-card>
     </n-modal>
   </n-card>
@@ -40,12 +41,6 @@ export default defineComponent({
     NButton,
     NModal,
     NAlert,
-    VNode: defineComponent({
-      props: ['render'],
-      render() {
-        return this.render();
-      },
-    }),
   },
   props: {
     lang: {

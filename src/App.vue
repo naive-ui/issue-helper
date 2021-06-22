@@ -39,4 +39,11 @@ body {
 a {
   text-decoration: none;
 }
+
+.modal-card {
+  width: calc(var(--content-width) + 32px);
+  max-width: var(--content-max-width);
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
 </style>
