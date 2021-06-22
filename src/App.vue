@@ -40,7 +40,7 @@ a {
   text-decoration: none;
 }
 
-.modal-card {
+.n-card.modal-card {
   width: calc(var(--content-width) + 32px);
   max-width: var(--content-max-width);
   margin-top: 32px;
