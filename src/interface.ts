@@ -1,4 +1,4 @@
 export enum IssueTypeLabel {
-  'New' = 'FEAT',
-  'Bug' = 'BUG'
+  'New' = '__FEATURE_REQUEST__',
+  'Bug' = '__BUG__'
 }
