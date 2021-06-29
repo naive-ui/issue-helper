@@ -29,3 +29,8 @@ export interface RepoItem {
   github: string;
   npm: string;
 }
+
+export enum IssueTypeLabel {
+  'New' = `<!-- __feature_request__ -->`,
+  'Bug' = `<!-- __bug__ -->`
+}
