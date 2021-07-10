@@ -499,39 +499,39 @@ export default defineComponent({
       // Setting issue string value
       issue.value = isBug.value
         ? `### ${formData.form.repo} version (版本)
-        ${formData.form.versionRepository}
+${formData.form.versionRepository}
 
-        ### Vue version (Vue 版本)
-        ${formData.form.versionVue}
+### Vue version (Vue 版本)
+${formData.form.versionVue}
 
-        ### Browser and its version (浏览器及其版本)
-        ${formData.form.versionBrowser}
+### Browser and its version (浏览器及其版本)
+${formData.form.versionBrowser}
 
-        ### System and its version (系统及其版本)
-        ${formData.form.versionSystem}
+### System and its version (系统及其版本)
+${formData.form.versionSystem}
 
-        ### Node version (Node 版本)
-        ${formData.form.versionNode}
+### Node version (Node 版本)
+${formData.form.versionNode}
 
-        ### Reappearance link (重现链接)
-        ${formData.form.reproduce}
+### Reappearance link (重现链接)
+${formData.form.reproduce}
 
-        ### Reappearance steps (重现步骤)
-        ${formData.form.steps}
+### Reappearance steps (重现步骤)
+${formData.form.steps}
 
-        ### Expected results (期望的结果)
-        ${formData.form.expected}
+### Expected results (期望的结果)
+${formData.form.expected}
 
-        ### Actual results (实际的结果)
-        ${formData.form.actual}
+### Actual results (实际的结果)
+${formData.form.actual}
 
-        ### Remarks (补充说明)
-        ${formData.form.remarks}
-        `.trim()
-                : `### This function solves the problem (这个功能解决的问题)
-        ${formData.form.functionContent}
-        ### Expected API (期望的 API)
-        ${formData.form.functionalExpectations}`.trim();
+### Remarks (补充说明)
+${formData.form.remarks}
+`.trim()
+        : `### This function solves the problem (这个功能解决的问题)
+${formData.form.functionContent}
+### Expected API (期望的 API)
+${formData.form.functionalExpectations}`.trim();
       // Setting issue render function value
       issueRenderRef.value = isBug.value
         ? () => [
@@ -592,7 +592,7 @@ export default defineComponent({
 
 
     function create() {
-      const issueString = `${createComment(formData.form.type)}\n\n${issue.value}\n\n${createComment(formData.form.type)}}`;
+      const issueString = `${createComment(formData.form.type)}\n\n${issue.value}\n\n${createComment(formData.form.type)}`;
       const issueUriComponent = encodeURIComponent(issueString).replace(
         /%2B/gi,
         '+'
