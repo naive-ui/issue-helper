@@ -45,6 +45,9 @@ export default defineComponent({
       setLang(param.lang);
     }
 
+    // back, forward
+    window.addEventListener('popstate', () => lang.value = getQuery()?.lang || 'en-US')
+
     const themeOverrides: GlobalThemeOverrides = {
       common: {
         fontSize: '15px',
