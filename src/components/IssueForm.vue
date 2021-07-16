@@ -231,7 +231,11 @@
           :label="contentText.functionContent"
           path="functionContent"
         >
-          <n-input v-model:value="form.functionContent" />
+          <n-input
+            type="textarea"
+            :autosize="autosizeConfig"
+            v-model:value="form.functionContent"
+          />
         </n-form-item>
         <n-alert
           type="default"
