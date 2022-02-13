@@ -469,21 +469,21 @@ export default defineComponent({
         (i) => i.github === formData.form.repo
       );
       return {
-        repositoryVersion: `https://registry.npm.taobao.org/${
+        repositoryVersion: `https://data.jsdelivr.com/v1/package/npm/${
           selectRepo.npm && selectRepo.npm
         }`,
-        vueVersion: 'https://registry.npm.taobao.org/vue',
+        vueVersion: 'https://data.jsdelivr.com/v1/package/npm/vue',
       };
     });
 
     async function fetchRepositoryVersion() {
       const res = await axios.get(versionApi.value.repositoryVersion);
-      formData.version.repo = Object.keys(res.data.versions).map((i) => {
+      formData.version.repo = res.data.versions.map((i) => {
         return { label: i, value: i };
       });
       formData.form.versionRepository = formData.version.repo[0].value;
       const vueRes = await axios.get(versionApi.value.vueVersion);
-      formData.version.vue = Object.keys(vueRes.data.versions).map((i) => {
+      formData.version.vue = vueRes.data.versions.map((i) => {
         return { label: i, value: i };
       });
       formData.form.versionVue = formData.version.vue[0].value;
