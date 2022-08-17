@@ -1,12 +1,19 @@
 <template>
-  <n-message-provider>
-    <IssuePage />
-  </n-message-provider>
+  <n-config-provider :theme="theme">
+    <n-message-provider>
+      <IssuePage />
+    </n-message-provider>
+  </n-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { NMessageProvider } from 'naive-ui';
+import { computed, defineComponent } from 'vue';
+import {
+  NMessageProvider,
+  NConfigProvider,
+  useOsTheme,
+  darkTheme,
+} from 'naive-ui';
 import IssuePage from './components/IssuePage.vue';
 
 export default defineComponent({
@@ -14,6 +21,14 @@ export default defineComponent({
   components: {
     IssuePage,
     NMessageProvider,
+    NConfigProvider,
+  },
+  setup() {
+    const theme = useOsTheme();
+
+    return {
+      theme: computed(() => (theme.value === 'dark' ? darkTheme : {})),
+    };
   },
 });
 </script>
